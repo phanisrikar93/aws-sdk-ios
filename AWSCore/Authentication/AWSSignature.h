@@ -40,6 +40,20 @@ FOUNDATION_EXPORT NSString *const AWSSignatureV4Terminator;
 - (instancetype)initWithCredentialsProvider:(id<AWSCredentialsProvider>)credentialsProvider
                                    endpoint:(AWSEndpoint *)endpoint;
 
+/**
+ Returns a URL signed using the SigV4 algorithm, including the session token (if any) as part of the signed query
+ paramters.
+
+ @param credentialsProvider credentials provider to get accessKey, secretKey, and optional sessionKey
+ @param httpMethod the HTTP method (e.g., "GET", "POST", etc)
+ @param expireDuration when should the signed URL expire
+ @param endpoint the endpoint of the service for which the URL is being generated
+ @param keyPath the request path
+ @param requestHeaders the headers to sign as part of the request
+ @param requestParameters the URL parameters to sign
+ @param signBody if true and the httpMethod is GET, sign an empty string as part of the signature content
+ @return a task containing the signed URL
+ */
 + (AWSTask<NSURL *> *)generateQueryStringForSignatureV4WithCredentialProvider:(id<AWSCredentialsProvider>)credentialsProvider
                                                                    httpMethod:(AWSHTTPMethod)httpMethod
                                                                expireDuration:(int32_t)expireDuration

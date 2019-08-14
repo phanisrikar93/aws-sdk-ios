@@ -1240,6 +1240,10 @@
 		FA5DFE5821FB8E4700C554E7 /* AWSCognitoIdentityASF.m in Sources */ = {isa = PBXBuildFile; fileRef = FA5DFE5721FB8E4700C554E7 /* AWSCognitoIdentityASF.m */; };
 		FA62A7172167C9F100EFB444 /* AWSGZIPBaseTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = FA62A7162167C9F100EFB444 /* AWSGZIPBaseTestCase.m */; };
 		FA6978C821FA63D50092C8F3 /* AWSPinpointBackgroundBehaviorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = FA6978C721FA63D40092C8F3 /* AWSPinpointBackgroundBehaviorTests.m */; };
+		FA7A44BD23046B8900F55D7A /* AWSSigV4Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7A44BC23046B8900F55D7A /* AWSSigV4Tests.swift */; };
+		FA7A44BF23046E6100F55D7A /* aws-sig-v4-test-suite in Resources */ = {isa = PBXBuildFile; fileRef = FA7A44BE23046E6100F55D7A /* aws-sig-v4-test-suite */; };
+		FA7A44C1230487A400F55D7A /* SigV4TestUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7A44C0230487A400F55D7A /* SigV4TestUtilities.swift */; };
+		FA7A44C32304888F00F55D7A /* aws-mobile-sdk-test-suite in Resources */ = {isa = PBXBuildFile; fileRef = FA7A44C22304888F00F55D7A /* aws-mobile-sdk-test-suite */; };
 		FA81D84E22FB8FBF0018DB1B /* AWSCognitoAuthUnitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EFDE85A91ED203D9008841EC /* AWSCognitoAuthUnitTests.m */; };
 		FA968B632302115E00AC6007 /* TranscribeStreamingTestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA968B622302115E00AC6007 /* TranscribeStreamingTestHelpers.swift */; };
 		FA968B65230211CD00AC6007 /* AWSSRWebSocketDelegateAdaptorDidFailWithErrorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA968B64230211CD00AC6007 /* AWSSRWebSocketDelegateAdaptorDidFailWithErrorTests.swift */; };
@@ -4401,6 +4405,11 @@
 		FA62A7152167C9F100EFB444 /* AWSGZIPBaseTestCase.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AWSGZIPBaseTestCase.h; sourceTree = "<group>"; };
 		FA62A7162167C9F100EFB444 /* AWSGZIPBaseTestCase.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWSGZIPBaseTestCase.m; sourceTree = "<group>"; };
 		FA6978C721FA63D40092C8F3 /* AWSPinpointBackgroundBehaviorTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWSPinpointBackgroundBehaviorTests.m; sourceTree = "<group>"; };
+		FA7A44BB23046B8900F55D7A /* AWSCoreUnitTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AWSCoreUnitTests-Bridging-Header.h"; sourceTree = "<group>"; };
+		FA7A44BC23046B8900F55D7A /* AWSSigV4Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWSSigV4Tests.swift; sourceTree = "<group>"; };
+		FA7A44BE23046E6100F55D7A /* aws-sig-v4-test-suite */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "aws-sig-v4-test-suite"; sourceTree = "<group>"; };
+		FA7A44C0230487A400F55D7A /* SigV4TestUtilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SigV4TestUtilities.swift; sourceTree = "<group>"; };
+		FA7A44C22304888F00F55D7A /* aws-mobile-sdk-test-suite */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "aws-mobile-sdk-test-suite"; sourceTree = "<group>"; };
 		FA968B622302115E00AC6007 /* TranscribeStreamingTestHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranscribeStreamingTestHelpers.swift; sourceTree = "<group>"; };
 		FA968B64230211CD00AC6007 /* AWSSRWebSocketDelegateAdaptorDidFailWithErrorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWSSRWebSocketDelegateAdaptorDidFailWithErrorTests.swift; sourceTree = "<group>"; };
 		FA968B66230212D400AC6007 /* AWSSRWebSocketDelegateAdaptorDidOpenTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWSSRWebSocketDelegateAdaptorDidOpenTests.swift; sourceTree = "<group>"; };
@@ -6457,12 +6466,17 @@
 		CE5603D31C6BC74500B4E00B /* AWSCoreUnitTests */ = {
 			isa = PBXGroup;
 			children = (
+				FA7A44C22304888F00F55D7A /* aws-mobile-sdk-test-suite */,
+				FA7A44BE23046E6100F55D7A /* aws-sig-v4-test-suite */,
+				FA7A44BB23046B8900F55D7A /* AWSCoreUnitTests-Bridging-Header.h */,
 				FA40A91121FA2F2A0050F4B2 /* AWSDateFormatterTests.m */,
 				CE5603DE1C6BC7C700B4E00B /* AWSGeneralCognitoIdentityTests.m */,
 				CE5603DF1C6BC7C700B4E00B /* AWSGeneralSTSTests.m */,
 				CE96C3FA1C6EA4670092D828 /* AWSServiceTests.m */,
+				FA7A44BC23046B8900F55D7A /* AWSSigV4Tests.swift */,
 				FA0A61CA22FE0E3300B051BE /* AWSURLSessionManagerTests.m */,
 				CE5603D61C6BC74500B4E00B /* Info.plist */,
+				FA7A44C0230487A400F55D7A /* SigV4TestUtilities.swift */,
 			);
 			path = AWSCoreUnitTests;
 			sourceTree = "<group>";
@@ -10635,6 +10649,7 @@
 					};
 					CE5603D11C6BC74500B4E00B = {
 						CreatedOnToolsVersion = 7.2.1;
+						LastSwiftMigration = 1030;
 					};
 					CE5603E81C6BC86C00B4E00B = {
 						CreatedOnToolsVersion = 7.2.1;
@@ -11313,6 +11328,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FA7A44C32304888F00F55D7A /* aws-mobile-sdk-test-suite in Resources */,
+				FA7A44BF23046E6100F55D7A /* aws-sig-v4-test-suite in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -12318,7 +12335,9 @@
 			files = (
 				FA0A61CD22FE3B2400B051BE /* AWSURLSessionManagerTests.m in Sources */,
 				CE5603E01C6BC7C700B4E00B /* AWSGeneralCognitoIdentityTests.m in Sources */,
+				FA7A44BD23046B8900F55D7A /* AWSSigV4Tests.swift in Sources */,
 				FA40A91221FA2F2A0050F4B2 /* AWSDateFormatterTests.m in Sources */,
+				FA7A44C1230487A400F55D7A /* SigV4TestUtilities.swift in Sources */,
 				CE5603E41C6BC82E00B4E00B /* AWSTestUtility.m in Sources */,
 				CE5603E11C6BC7C700B4E00B /* AWSGeneralSTSTests.m in Sources */,
 				CE96C3FB1C6EA4670092D828 /* AWSServiceTests.m in Sources */,
@@ -16449,6 +16468,7 @@
 		CE5603DB1C6BC74500B4E00B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = AWSCoreUnitTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -16459,12 +16479,16 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.amazonaws.AWSCoreUnitTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "AWSCoreUnitTests/AWSCoreUnitTests-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
 		CE5603DC1C6BC74500B4E00B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = AWSCoreUnitTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -16475,6 +16499,8 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.amazonaws.AWSCoreUnitTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "AWSCoreUnitTests/AWSCoreUnitTests-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};

@@ -485,7 +485,7 @@ NSString *const AWSSignatureV4Terminator = @"aws4_request";
         if(signBody && httpMethod == AWSHTTPMethodGET){
             //in case of http get we sign the body as an empty string only if the sign body flag is set to true
             contentSha256 = [AWSSignatureSignerUtility hexEncode:[[NSString alloc] initWithData:[AWSSignatureSignerUtility hash:[@"" dataUsingEncoding:NSUTF8StringEncoding]] encoding:NSASCIIStringEncoding]];
-        }else{
+        } else {
             contentSha256 = @"UNSIGNED-PAYLOAD";
         }
         //Generate Canonical Request

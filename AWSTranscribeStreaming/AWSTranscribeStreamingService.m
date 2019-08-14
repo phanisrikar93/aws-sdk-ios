@@ -448,22 +448,27 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
 
         id<AWSCredentialsProvider> credentialProvider = self.configuration.credentialsProvider;
 
-        NSString *path = @"/stream-transcription-websocket";
+        NSString *path = @"stream-transcription-websocket";
 
         NSString *urlString = [NSString stringWithFormat:@"wss://transcribestreaming.%@.amazonaws.com:8443/%@",
                                self.configuration.endpoint.regionName,
                                path];
 
-        AWSEndpoint *endpoint = [[AWSEndpoint alloc] initWithURLString:urlString];
+        NSURL *url = [NSURL URLWithString:urlString];
+
+        AWSEndpoint *endpoint = [[AWSEndpoint alloc] initWithRegion:self.configuration.regionType
+                                                            service:AWSServiceTranscribeStreaming
+                                                                URL:url];
 
         int32_t expireDuration = 300;
 
+        // Signer expects values of parameters dictionary to be strings or arrays of strings
+        NSString *sampleRate = [NSString stringWithFormat:@"%@", [requestParams valueForKey:@"MediaSampleRateHertz"]];
         NSDictionary *parameters = @{
-                                     @"media-encoding": [requestParams valueForKey:@"MediaEncoding"],
+                                     @"media-encoding": [requestParams objectForKey:@"MediaEncoding"],
                                      @"language-code": [requestParams valueForKey:@"LanguageCode"],
-                                     @"sample-rate": [requestParams valueForKey:@"MediaSampleRateHertz"]
+                                     @"sample-rate": sampleRate
                                      };
-
 
         NSMutableDictionary *headers = [NSMutableDictionary new];
         [headers setObject:endpoint.hostName forKey:@"host"];
