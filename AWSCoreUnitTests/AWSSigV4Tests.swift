@@ -25,6 +25,30 @@ import AWSCore
 /// directory as-is. This class' setUp method will load the test suites into a bundle for execution
 class AWSSigV4Tests: XCTestCase {
 
+    // Credentials provider for the various tests. The keys and tokens are taken from the AWS SigV4 test suite:
+    // https://docs.aws.amazon.com/general/latest/gr/signature-v4-test-suite.html
+    // Scope: AKIDEXAMPLE/20150830/us-east-1/service/aws4_request
+    static let regionName = "us-east-1"
+    static let serviceName = "service"
+    static let accessKey = "AKIDEXAMPLE"
+    static let secretKey = "wJalrXUtnFEMI/K7MDENG+bPxRfiCYEXAMPLEKEY"
+    static let securityToken = "AQoDYXdzEPT//////////wEXAMPLEtc764bNrC9SAPBSM22wDOk4x4HIZ8j4FZTwdQWLWsKWHGBuFqwA" +
+        "eMicRXmxfpSPfIeoIYRqTflfKD8YUuwthAx7mSEI/qkPpKPi/kMcGdQrmGdeehM4IC1NtBmUpp2wUE8p" +
+        "hUZampKsburEDy0KPkyQDYwT7WZ0wq5VSXDvp75YU9HFvlRd8Tx6q6fE8YQcHNVXAkiY9q6d+xo0rKwT" +
+        "38xVqr7ZD0u0iPPkUL64lIZbqBAz+scqKmlzm8FDrypNC9Yjc8fPOLn9FX9KSYvKTr4rvx3iSIlTJabI" +
+        "Qwj2ICCR/oLxBA=="
+
+    // 20150830T123600Z
+    static let testDate = Date(timeIntervalSince1970: 1440938160)
+    static let expiry: Int32 = 300
+
+    static let basicTestCredentials = AWSStaticCredentialsProvider(accessKey: accessKey,
+                                                                   secretKey: secretKey)
+
+    static let sessionTestCredentials = AWSBasicSessionCredentialsProvider(accessKey: accessKey,
+                                                                           secretKey: secretKey,
+                                                                           sessionToken: securityToken)
+
     static var allTestData = [SigV4TestData]()
 
     override static func setUp() {
@@ -63,24 +87,74 @@ class AWSSigV4Tests: XCTestCase {
 
     // MARK: - Tests
 
-    func testAllCases() {
-        XCTFail("Not yet implemented")
-        for testData in AWSSigV4Tests.allTestData {
-            assertSigV4(for: testData)
+    func testPresignedURL() throws {
+        let vanilla = AWSSigV4Tests.allTestData.first { $0.testCaseName == "get-vanilla" }
+        try assertPresignedURL(for: vanilla!)
+//        for testData in AWSSigV4Tests.allTestData {
+//            try assertPresignedURL(for: testData)
+//        }
+    }
+
+    func assertPresignedURL(for testData: SigV4TestData) throws {
+        let credentialsProvider = getCredentialsProvider(for: testData)
+        let signSessionToken = shouldSignSessionToken(for: testData)
+
+        let originalRequest = try testData.makeURLRequest(fromRequestString: testData.originalRequest)
+        let signedRequest = try testData.makeURLRequest(fromRequestString: testData.signedRequest)
+        let expectedURL = URL(string: "http://www.example.com")!
+
+        let taskIsComplete = expectation(description: "Task is complete")
+
+        let presignedURL = AWSSignatureV4Signer.sigV4SignedURL(
+            with: originalRequest,
+            credentialProvider: AWSSigV4Tests.sessionTestCredentials,
+            regionName: AWSSigV4Tests.regionName,
+            serviceName: AWSSigV4Tests.serviceName,
+            date: AWSSigV4Tests.testDate,
+            expireDuration: AWSSigV4Tests.expiry,
+            signBody: true,
+            signSessionToken: signSessionToken)?.continueWith { task in
+                defer {
+                    taskIsComplete.fulfill()
+                }
+
+                if let error = task.error {
+                    XCTFail("Unexpected error getting presigned URL for \(testData.testCaseName): \(error)")
+                    return nil
+                }
+
+                guard let url = task.result else {
+                    XCTFail("URL unexpectedly empty for \(testData.testCaseName)")
+                    return nil
+                }
+
+                XCTAssertEqual(url.absoluteString, expectedURL.absoluteString)
+
+                return nil
+        }
+
+        waitForExpectations(timeout: 0.1)
+    }
+
+    // MARK: - test-specific utilities
+    func getCredentialsProvider(for testData: SigV4TestData) -> AWSCredentialsProvider {
+        switch testData.testCaseName {
+        case "foo",
+             "Bar":
+            return AWSSigV4Tests.sessionTestCredentials
+        default:
+            return AWSSigV4Tests.basicTestCredentials
         }
     }
 
-    func assertSigV4(for testData: SigV4TestData) {
-
+    func shouldSignSessionToken(for testData: SigV4TestData) -> Bool {
+        switch testData.testCaseName {
+        case "foo",
+             "Bar":
+            return true
+        default:
+            return false
+        }
     }
 
-}
-
-struct SigV4TestData {
-    let testCaseName: String
-    let originalRequest: String
-    let canonicalRequest: String
-    let stringToSign: String
-    let authorizationHeader: String
-    let signedRequest: String
 }

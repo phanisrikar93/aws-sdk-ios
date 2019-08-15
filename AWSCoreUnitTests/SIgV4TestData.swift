@@ -13,20 +13,12 @@
 // permissions and limitations under the License.
 //
 
-#import <Foundation/Foundation.h>
-#import <AWSCore/AWSCore.h>
-
-NS_ASSUME_NONNULL_BEGIN
-
-@interface AWSTSNetworking : NSObject<NSURLSessionDelegate, NSURLSessionDataDelegate,  NSURLSessionStreamDelegate, AWSNetworkingRequestInterceptor>
-
-@property (nonatomic, strong) AWSNetworkingConfiguration *configuration;
-@property (nonatomic, strong) NSInputStream *primaryIPStream;
-
-- (instancetype)initWithConfiguration:(AWSNetworkingConfiguration *)configuration;
-
-- (AWSTask *)dataTaskWithRequest:(AWSNetworkingRequest *)request;
-
-@end
-
-NS_ASSUME_NONNULL_END
+/// A holder for test case data from the SigV4 test suite
+struct SigV4TestData {
+    let testCaseName: String
+    let originalRequest: String
+    let canonicalRequest: String
+    let stringToSign: String
+    let authorizationHeader: String
+    let signedRequest: String
+}
